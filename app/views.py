@@ -1,5 +1,6 @@
 from django.shortcuts import render
-
+from .models import Periodista
+#estructuras basicas de redireccionamiento
 def inicio(request):
     context = {}
     return render(request, 'inicio.html', context)
@@ -27,4 +28,12 @@ def suscribirse(request):
 def tiempo(request):
     context = {}
     return render(request, 'tiempo.html', context)
+
+
+# Corrección en views.py
+def Periodismo(request):
+    periodistaslistados = Periodista.objects.all()
+    return render(request, 'Periodismo.html', {'Periodista': periodistaslistados})
+
+
 
