@@ -9,5 +9,5 @@ class Periodista(models.Model):
     apellido_materno = models.CharField(max_length=20)
     fecha_nacimiento = models.DateField(blank=False, null=False)
     email = models.EmailField(unique=True, max_length=100, blank=True, null=True)
-def __str__(self):
-    return str(self.nombre)+" "+str(self.apellido_paterno)
+    def __str__(self):
+        return f"{self.nombre} {self.apellido_paterno} {self.apellido_materno}"

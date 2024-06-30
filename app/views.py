@@ -36,4 +36,3 @@ def Periodismo(request):
     return render(request, 'Periodismo.html', {'Periodista': periodistaslistados})
 
 
-
