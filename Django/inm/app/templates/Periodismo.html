@@ -53,14 +53,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for p in Periodista %}
+                    {% for p in periodistas_listados %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ p.nombre }} {{ p.apellido_paterno }} {{ p.apellido_materno }}</td>
                         <td>{{ p.rut }}</td>
                         <td>
-                            <a href="{% url 'periodista_update' p.rut %}" class="btn btn-primary btn-sm">Editar</a>
-                            <form action="{% url 'periodista_delete' p.rut %}" method="post" style="display:inline;">
+                            <a href="{% url 'periodista_update' p.pk %}" class="btn btn-primary btn-sm">Editar</a>
+                            <form action="{% url 'periodista_delete' p.pk %}" method="post" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>

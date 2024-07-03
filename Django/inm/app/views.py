@@ -1,6 +1,6 @@
-# app/views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import LoginView
 from .models import Periodista
 from .forms import PeriodistaForm
 
@@ -35,8 +35,7 @@ def tiempo(request):
 
 def periodismo(request):
     periodistas_listados = Periodista.objects.all()
-    return render(request, 'Periodismo.html', {'Periodista': periodistas_listados})
-
+    return render(request, 'Periodismo.html', {'periodistas_listados': periodistas_listados})
 # CRUD Views
 def periodista_create(request):
     if request.method == 'POST':
@@ -65,3 +64,17 @@ def periodista_delete(request, pk):
         periodista.delete()
         return redirect('periodismo')
     return render(request, 'periodista_confirm_delete.html', {'object': periodista})
+
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('periodismo')  # Redirige al usuario a 'periodismo'
+        else:
+            context = {'error_message': 'Nombre de usuario o contraseña incorrectos.'}
+            return render(request, 'inicio.html', context)
+    else:
+        return render(request, 'inicio.html')

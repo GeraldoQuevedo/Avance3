@@ -18,7 +18,7 @@
 <!--formulario-->
 <div class="formulario">
     <h1>Inicio de Sesión</h1>
-    <form method="post" onsubmit="return validarFormulario()">
+    <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="campo">
             <input type="text" name="username" id="username" required

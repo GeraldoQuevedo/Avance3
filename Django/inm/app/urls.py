@@ -1,5 +1,3 @@
-# app/urls.py
-
 from django.urls import path
 from . import views
 
@@ -15,4 +13,5 @@ urlpatterns = [
     path('periodista/create/', views.periodista_create, name='periodista_create'),
     path('periodista/update/<str:pk>/', views.periodista_update, name='periodista_update'),
     path('periodista/delete/<str:pk>/', views.periodista_delete, name='periodista_delete'),
+    path('iniciar-sesion/', views.iniciar_sesion, name='login'),  # URL para iniciar sesión
 ]
