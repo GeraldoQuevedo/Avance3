@@ -1,0 +1,101 @@
+{% load custom_filters %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Chilevisión Noticias - Carrito</title>
+    <!-- Meta etiquetas requeridas -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Chilevisión</a>
+            <!-- Botón para alternar el menú en pantallas pequeñas -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Contenido del menú desplegable -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- Enlaces a diferentes páginas -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'proyecto1' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tiempo' %}">Revisa el tiempo acá</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'productos' %}">Productos</a>
+                    </li>
+                </ul>
+                <!-- Formulario de búsqueda -->
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+                <!-- Enlace al carrito de compras -->
+                <a class="btn btn-primary mx-2" href="{% url 'ver_carrito' %}">Carrito</a>
+            </div>
+        </div>
+    </nav>
+
+<!-- Contenido principal -->
+<div class="container py-4">
+    <h2 class="text-center">Carrito de Compras</h2>
+    <!-- Tabla responsive para los elementos del carrito -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Bucle para mostrar los elementos del carrito -->
+                {% for item in carrito_items %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.producto.nombre }}</td>
+                    <td>{{ item.cantidad }}</td>
+                    <td>${{ item.producto.precio }}</td>
+                    <td>${{ item.producto.precio|multiply:item.cantidad }}</td>
+                    <td>
+                        <!-- Formulario para eliminar un elemento del carrito -->
+                        <form action="{% url 'eliminar_del_carrito' item.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Mostrar el costo total -->
+        <h3 class="text-end">Total: ${{ total }}</h3>
+    </div>
+    
+    <!-- Botón para regresar a la página de productos -->
+    <div class="container text-center mt-3">
+        <a class="btn btn-primary" href="{% url 'productos' %}">Volver a Productos</a>
+    </div>
+
+</div>
+
+<!-- Dependencias de JavaScript de Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
